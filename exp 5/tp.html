@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>College Navigation</title>
+
+<style>
+
+/* Reset */
+nav ul, nav li, nav a {
+  margin:0; 
+  padding:0;
+  list-style:none;
+  text-decoration:none;
+  box-sizing:border-box;
+}
+
+/* Navbar */
+nav{
+  background:#002147;
+  height:60px;
+  font-family:Arial;
+  border-bottom:4px solid #f1c40f;
+}
+
+nav > ul > li{          /*cascading*/
+  float:left;
+  position:relative;
+}
+
+nav a{
+  display:block;
+  padding:0 25px;
+  line-height:60px;
+  color:white;
+  font-weight:bold;
+  transition:.3s;
+}
+
+/* Pseudo classes */
+nav a:hover, nav a:focus{
+  background:#003366;
+  color:#f1c40f;
+}
+
+nav li:active > a{
+  transform:scale(.95);
+}
+
+/* Image Sprite */
+.icon{
+  display:inline-block;
+  width:20px; height:20px;
+  margin-right:8px;
+  vertical-align:middle;
+  background:url('https://via.placeholder.com/100x20') no-repeat;
+}
+.icon-home{background-position:0 0;}
+.icon-about{background-position:-25px 0;}
+.icon-dept{background-position:-50px 0;}
+
+/* Dropdown */
+.dropdown{
+  position:absolute;
+  top:60px; left:0;
+  width:200px;
+  background:#fff;
+  box-shadow:0 8px 16px rgba(0,0,0,.2);
+  opacity:0; visibility:hidden;
+  transform:translateY(10px);
+  transition:.4s;
+}
+
+.dropdown li{float:none; border-bottom:1px solid #eee;}
+.dropdown a{color:#333; line-height:45px; padding:0 15px;}
+
+nav li:hover .dropdown{
+  opacity:1; visibility:visible;
+  transform:translateY(0);
+}
+
+/* Responsive */
+@media(max-width:768px){
+  nav{height:auto;}
+  nav>ul>li{float:none; width:100%;}
+  .dropdown{position:static; width:100%; display:none;}
+  nav li:hover .dropdown{display:block;}
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+<ul>
+<li><a href="#"><span class="icon icon-home"></span>Home</a></li>
+<li><a href="#"><span class="icon icon-about"></span>About Us</a></li>
+<li>
+<a href="#"><span class="icon icon-dept"></span>Departments ▾</a>
+<ul class="dropdown">
+<li><a href="#">Computer Science</a></li>
+<li><a href="#">Engineering</a></li>
+<li><a href="#">Arts & Sciences</a></li>
+<li><a href="#">Business School</a></li>
+</ul>
+</li>
+<li><a href="#">Admissions</a></li>
+</ul>
+</nav>
+
+<div style="padding:50px; text-align:center;">
+<h1>Welcome to University Portal</h1>
+<p>Hover over "Departments" to see the dropdown.</p>
+</div>
+
+</body>
+</html>

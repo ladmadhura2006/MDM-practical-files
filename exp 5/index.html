@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QuickWeather App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="weather-card">
+        <h2>Weather Search</h2>
+        <div class="search-box">
+            <input type="text" id="city-input" placeholder="Enter city name...">
+            <button id="search-btn">Get Weather</button>
+        </div>
+        
+        <div id="weather-result" style="display: none; border-top: 1px solid #eee; margin-top: 20px;">
+            <h2 id="city-name"></h2>
+            <p id="condition" style="text-transform: capitalize; font-style: italic;"></p>
+            <p>Temperature: <span id="temp"></span></p>
+            <p>Humidity: <span id="humidity"></span></p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

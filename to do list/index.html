@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aesthetic Planner | My Day</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+  <style>
+    :root {
+      --pastel-pink: #ffdae0;
+      --pastel-purple: #e2d9ff;
+      --accent-soft: #f37f94;
+      --text-dark: #5a5266;
+    }
+
+    body {
+      background: #fdfcf0;
+      background-image: 
+        radial-gradient(at 0% 0%, var(--pastel-pink) 0, transparent 45%),
+        radial-gradient(at 100% 100%, var(--pastel-purple) 0, transparent 45%);
+      min-height: 100vh;
+      font-family: 'Quicksand', sans-serif;
+      color: var(--text-dark);
+      display: flex;
+      align-items: center;
+      padding: 30px 0;
+    }
+
+    .main-card {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(10px);
+      border: 5px solid #f08080c0;
+      border-radius: 35px;
+      padding: 2.5rem;
+      box-shadow: 0 15px 35px rgba(226, 93, 113, 0.39);
+    }
+
+    h2 {
+      font-weight: 800;
+      font-size: xx-large;
+      color: var(--accent-soft);
+      letter-spacing: -0.5px;
+    }
+
+    .input-box {
+      background: #ffffff;
+      border-radius: 15px;
+      padding: 10px 12px;
+      display: flex;
+      border: 2px solid #f8f0f2;
+      transition: 0.3s;
+    }
+
+    .input-box:focus-within {
+      border-color: var(--pastel-pink);
+      box-shadow: 0 5px 15px rgba(255, 143, 163, 0.1);
+    }
+
+    .form-control {
+      border: none !important;
+      box-shadow: none !important;
+      background: transparent;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .btn-add {
+      background: var(--accent-soft);
+      color: white;
+      border: none;
+      border-radius: 15px !important;
+      padding: 8px 22px;
+      font-weight: 700;
+      transition: 0.3s;
+    }
+
+    .btn-add:hover {
+      background: #ff758f;
+      transform: translateY(-2px);
+    }
+
+    .list-group-item {
+      background: #ffffff;
+      border: none;
+      margin-bottom: 12px;
+      border-radius: 18px !important;
+      padding: 1rem 1.2rem;
+      display: flex;
+      align-items: center;
+      transition: 0.3s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+    }
+
+    .list-group-item:hover {
+      transform: scale(1.02);
+    }
+
+    .custom-check {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--pastel-pink);
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+      margin-right: 12px;
+    }
+
+    .completed .custom-check {
+      background: var(--accent-soft);
+      border-color: var(--accent-soft);
+    }
+
+    .completed .task-text {
+      text-decoration: line-through;
+      color: #cbd5e0;
+    }
+
+    .delete-icon {
+      color: #ffccd5;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: 0.3s;
+    }
+
+    .delete-icon:hover {
+      color: #ff8fa3;
+    }
+
+    .badge-aesthetic {
+      background: #fff;
+      color: var(--accent-soft);
+      padding: 6px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      border: 1px solid var(--pastel-pink);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-9 col-lg-5">
+      
+      <div class="main-card animate__animated animate__zoomIn">
+        <header class="d-flex justify-content-between align-items-center mb-4">
+          <div>
+            <h2 class="mb-0">Daily Sparkle <i class="bi bi-stars"></i></h2>
+            <p class="small text-muted mb-0">Today's magic list</p>
+          </div>
+          <span class="badge-aesthetic" id="taskCounter">0 Tasks</span>
+        </header>
+
+        <div class="input-box mb-4">
+          <input type="text" id="taskInput" class="form-control" placeholder="Plan something lovely...">
+          <button class="btn btn-add" id="addBtn">Add</button>
+        </div>
+
+        <ul class="list-group" id="taskList">
+          </ul>
+
+        <div class="text-center mt-4">
+          <button class="btn btn-sm text-muted opacity-50" onclick="clearAll()" style="font-size: 0.75rem;">
+            Clear All Tasks
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  let tasks = JSON.parse(localStorage.getItem("sparkle_tasks")) || [];
+
+  const taskInput = document.getElementById("taskInput");
+  const taskList = document.getElementById("taskList");
+  const addBtn = document.getElementById("addBtn");
+  const taskCounter = document.getElementById("taskCounter");
+
+  addBtn.addEventListener("click", addTask);
+  taskInput.addEventListener("keypress", e => e.key === "Enter" && addTask());
+
+  function addTask() {
+    const text = taskInput.value.trim();
+    if (!text) return;
+    tasks.unshift({ id: Date.now(), text, completed: false });
+    saveAndRender();
+    taskInput.value = "";
+  }
+
+  function toggleTask(id) {
+    tasks = tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t);
+    saveAndRender();
+  }
+
+  function deleteTask(id) {
+    tasks = tasks.filter(t => t.id !== id);
+    saveAndRender();
+  }
+
+  function clearAll() {
+    if(confirm("Clear your whole list? ✨")) {
+      tasks = [];
+      saveAndRender();
+    }
+  }
+
+  function saveAndRender() {
+    localStorage.setItem("sparkle_tasks", JSON.stringify(tasks));
+    renderTasks();
+  }
+
+  function renderTasks() {
+    taskList.innerHTML = "";
+    taskCounter.innerText = `${tasks.length} Tasks`;
+
+    if (tasks.length === 0) {
+      taskList.innerHTML = `
+        <div class="text-center py-5 animate__animated animate__fadeIn">
+          <i class="bi bi-brightness-high fs-1 opacity-25"></i>
+          <p class="text-muted small mt-2">No tasks yet. Take a breath!</p>
+        </div>`;
+      return;
+    }
+
+    tasks.forEach(task => {
+      const li = document.createElement("li");
+      li.className = `list-group-item animate__animated animate__fadeInUp ${task.completed ? 'completed' : ''}`;
+      
+      li.innerHTML = `
+        <div class="custom-check" onclick="toggleTask(${task.id})">
+          ${task.completed ? '<i class="bi bi-check-lg text-white"></i>' : ''}
+        </div>
+        <span class="task-text flex-grow-1" onclick="toggleTask(${task.id})" style="cursor:pointer">${task.text}</span>
+        <i class="bi bi-trash3-fill delete-icon ms-2" onclick="deleteTask(${task.id})"></i>
+      `;
+      taskList.appendChild(li);
+    });
+  }
+
+  renderTasks();
+</script>
+
+</body>
+</html>

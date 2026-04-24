@@ -1,0 +1,50 @@
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background: radial-gradient(white,rgb(66, 139, 188),rgb(5, 101, 161));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.weather-card {
+    background: rgb(147, 208, 233);
+    padding: 3rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(66, 70, 74, 0.418);
+    text-align: center;
+    max-width: 300px;
+}
+
+.search-box {
+    margin-bottom: 1.5rem;
+}
+
+input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 70%;
+}
+
+#search-btn{
+    margin-top: 1em;
+}
+button {
+    padding: 8px 12px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.hidden { display: none; }
+
+.weather-result {
+    display: none;
+    justify-content: space-around;
+    margin-top: 1rem;
+    font-weight: bold;
+}

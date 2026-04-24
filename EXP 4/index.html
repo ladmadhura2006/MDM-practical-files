@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Interactive Page</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        /* General page look */
+        body { font-family: sans-serif; text-align: center; padding-top: 30px; }
+        
+        /* The box we are going to change */
+        #myBox { 
+            width: 150px; 
+            height: 100px; 
+            background-color: blue; 
+            margin: 20px auto; 
+            color: white; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+        }
+
+        /* Basic button styling */
+        button { 
+            display: block;    /* Makes buttons stack vertically */
+            margin: 10px auto; /* Centers them and adds space between */
+            padding: 8px 15px; 
+        }
+    </style>
+</head>
+<body>
+
+    <h1>My Controller</h1>
+    
+    <div id="myBox">Box</div>
+
+    <button onclick="changeColor()">1. Change Color (JS)</button>
+    <button id="toggleBtn">2. Hide or Show (jQuery)</button>
+    <button id="growBtn">3. Make Wider (jQuery)</button>
+    <button id="resetBtn">4. Reset Everything</button>
+
+    <script>
+        // --- BASIC JAVASCRIPT SECTION ---
+        
+        // This function changes the box color using standard DOM manipulation
+        function changeColor() {
+            // Find the element with ID 'myBox' and change its background property
+            document.getElementById('myBox').style.backgroundColor = "orange";
+        }
+
+
+        // --- JQUERY SECTION ---
+
+        // Wait for the webpage to finish loading before running any jQuery
+        $(document).ready(function() {
+            
+            // This button toggles (switches) the box between hidden and visible
+            $("#toggleBtn").click(function() {
+                $("#myBox").toggle(); // .toggle() is a built-in jQuery effect
+            });
+
+            // This button uses an animation to change the width smoothly
+            $("#growBtn").click(function() {
+                $("#myBox").animate({ width: "300px" }, 500); // 500 is the speed in ms
+            });
+
+            // This button returns the box to its original state
+            $("#resetBtn").click(function() {
+                // .css sets multiple styles at once; .show ensures it's visible
+                $("#myBox").css({ "background-color": "blue", "width": "150px" }).show();
+            });
+
+        });
+    </script>
+
+</body>
+</html>

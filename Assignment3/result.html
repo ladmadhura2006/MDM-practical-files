@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback Details</title>
+    <style>
+        body {
+            background: rgba(206, 8, 48, 0.894);
+            font-family: Arial, sans-serif;
+        }
+
+        .card {
+            width: 450px;
+            margin: 60px auto;
+            padding: 25px;
+            background: rgb(249, 182, 196);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #444;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f80254;
+            color: white;
+            padding: 10px;
+        }
+
+        td {
+            padding: 10px;
+            
+        }
+
+        tr:nth-child(even) {
+            background: rgb(249, 182, 196);
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+    <h2>Feedback Summary</h2>
+
+    <table>
+        <tr><th>Field</th><th>Value</th></tr>
+        <tr><td>Name</td><td id="name"></td></tr>
+        <tr><td>Address</td><td id="address"></td></tr>
+        <tr><td>Gender</td><td id="gender"></td></tr>
+        <tr><td>Mobile</td><td id="mobile"></td></tr>
+        <tr><td>Email</td><td id="email"></td></tr>
+    </table>
+</div>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+
+    document.getElementById("name").textContent = params.get("name");
+    document.getElementById("address").textContent = params.get("address");
+    document.getElementById("gender").textContent = params.get("gender");
+    document.getElementById("mobile").textContent = params.get("mobile");
+    document.getElementById("email").textContent = params.get("email");
+</script>
+
+</body>
+</html>
